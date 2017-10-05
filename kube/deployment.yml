@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kube-sample
+  namespace: tw-public
+  labels:
+    tw-app: kube-sample
+    tw-team: transfer-experience
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 30%
+      maxSurge: 50%
+  template:
+    metadata:
+      labels:
+        tw-app: kube-sample
+        tw-team: transfer-experience
+    spec:
+      containers:
+        - name: kube-sample-ruby
+          image: 634406550025.dkr.ecr.eu-west-1.amazonaws.com/kube-sample:latest
+          ports:
+            - containerPort: 9292
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            httpGet:
+              path: /
+              port: 9292 
+          readinessProbe:
+            periodSeconds: 5
+            httpGet:
+              path: /
+              port: 9292 

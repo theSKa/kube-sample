@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kube-sample
+  namespace: tw-public
+  labels:
+    tw-app: kube-sample
+    tw-team: transfer-experience
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - hosts:
+    - language.services.prod.k8stw.com
+    secretName: kube-sample-tls
+  rules:
+  - host: language.services.prod.k8stw.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kube-sample
+          servicePort: 80

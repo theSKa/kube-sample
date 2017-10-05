@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-sample
+  namespace: tw-public
+  labels:
+    tw-app: kube-sample
+    tw-team: transfer-experience
+spec:
+  ports:
+  - port: 80
+    targetPort: 9292 
+    protocol: TCP
+  selector:
+    tw-app: kube-sample
