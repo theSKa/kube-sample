@@ -6,4 +6,4 @@ ADD . /app
 RUN gem install bundler
 RUN bundle install
 EXPOSE 9292
-CMD ["ruby", "app.rb", "--host=0.0.0.0"]
+CMD ["rackup", "--host=0.0.0.0"]
